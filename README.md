@@ -1,58 +1,178 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=flat-square&logo=laravel" alt="Laravel 13">
+  <img src="https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=flat-square&logo=php" alt="PHP 8.3+">
+  <img src="https://img.shields.io/badge/License-MIT-blue?style=flat-square" alt="License MIT">
 </p>
 
-## About Laravel
+<h1 align="center">📝 WebDocs</h1>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  Aplikasi penulisan dan kolaborasi dokumen secara <b>real-time</b>, dibangun dengan Laravel.
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tentang WebDocs
 
-## Learning Laravel
+WebDocs adalah aplikasi berbasis web untuk menulis, menyimpan, dan mengelola dokumen secara online — mirip Google Docs dalam skala sederhana. Setiap pengguna dapat membuat dokumen, mengundang kolaborator untuk menulis bersama secara real-time, melihat riwayat perubahan, dan membagikan dokumen lewat tautan publik.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## ✨ Fitur Utama
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- **Autentikasi pengguna** — daftar, masuk, verifikasi email, dan reset password (berbasis Laravel Breeze).
+- **Dokumen pribadi** — buat, edit, dan hapus dokumen tak terbatas dari dashboard.
+- **Editor rich text** — menulis dengan format teks menggunakan [Quill](https://quilljs.com).
+- **Kolaborasi real-time** — undang pengguna lain sebagai kolaborator dan tulis bersama dalam dokumen yang sama, perubahan tersinkron otomatis lewat WebSocket ([Laravel Reverb](https://laravel.com/docs/reverb) + [Laravel Echo](https://laravel.com/docs/broadcasting)).
+- **Indikator aktivitas** — lihat siapa yang sedang mengetik dan aktivitas terbaru pada dokumen secara langsung.
+- **Riwayat versi** — setiap perubahan tersimpan sebagai versi, dapat dilihat dan ditelusuri kembali kapan saja.
+- **Berbagi dokumen publik** — bagikan dokumen lewat tautan unik tanpa perlu login.
+- **Dashboard ringkas** — statistik jumlah dokumen, dokumen yang dibuat hari ini, dan kapan terakhir diubah.
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+## 🛠️ Teknologi yang Digunakan
 
-## Agentic Development
+| Komponen | Teknologi |
+|---|---|
+| Backend | Laravel 13 (PHP 8.3+) |
+| Database | SQLite (default), bisa diganti MySQL/PostgreSQL |
+| Realtime / WebSocket | Laravel Reverb, Laravel Echo, Pusher JS |
+| Editor teks | Quill.js |
+| Frontend build | Vite, Tailwind CSS, Alpine.js |
+| Autentikasi | Laravel Breeze |
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+## 📋 Prasyarat
+
+Pastikan sudah terpasang di komputer Anda:
+
+- PHP **8.3** atau lebih baru
+- Composer
+- Node.js **18+** dan NPM
+- Ekstensi PHP: `sqlite3` (atau driver database lain sesuai pilihan)
+
+## 🚀 Instalasi
+
+1. **Clone atau salin proyek ini**, lalu masuk ke direktori proyek:
+   ```bash
+   cd webdocs
+   ```
+
+2. **Install dependency PHP:**
+   ```bash
+   composer install
+   ```
+
+3. **Install dependency JavaScript:**
+   ```bash
+   npm install
+   ```
+
+4. **Salin file environment** dan generate application key:
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Siapkan database** (default menggunakan SQLite):
+   ```bash
+   touch database/database.sqlite
+   php artisan migrate
+   ```
+
+   > Jika ingin memakai MySQL/PostgreSQL, ubah variabel `DB_*` di file `.env` sesuai konfigurasi database Anda sebelum menjalankan migrasi.
+
+6. **(Opsional) Isi data contoh** untuk keperluan testing:
+   ```bash
+   php artisan db:seed
+   ```
+
+7. **Build asset frontend:**
+   ```bash
+   npm run build
+   ```
+
+## ▶️ Menjalankan Aplikasi
+
+### Mode development
+
+Jalankan semua service sekaligus (server Laravel, queue worker, log viewer, dan Vite dev server) dengan satu perintah:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer run dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+Atau jalankan secara manual di terminal terpisah:
 
-## Contributing
+```bash
+php artisan serve              # server web
+php artisan queue:listen       # worker antrian
+npm run dev                    # Vite dev server (hot reload)
+php artisan reverb:start       # server WebSocket untuk fitur realtime
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Aplikasi dapat diakses di `http://localhost:8000`.
 
-## Code of Conduct
+### Mode produksi
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+npm run build
+php artisan config:cache
+php artisan route:cache
+php artisan reverb:start
+```
 
-## Security Vulnerabilities
+> Untuk produksi, jalankan `reverb:start` di balik process manager seperti Supervisor agar tetap berjalan, dan pastikan variabel `REVERB_*` di `.env` sudah disesuaikan (host, port, app key/secret).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## ⚙️ Konfigurasi Penting
 
-## License
+Beberapa variabel `.env` yang perlu diperhatikan:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```env
+APP_NAME=WebDocs
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=sqlite
+
+BROADCAST_CONNECTION=reverb
+REVERB_APP_ID=
+REVERB_APP_KEY=
+REVERB_APP_SECRET=
+REVERB_HOST=localhost
+REVERB_PORT=8080
+REVERB_SCHEME=http
+```
+
+Agar fitur kolaborasi real-time berfungsi, pastikan `BROADCAST_CONNECTION` diatur ke `reverb` (bukan `log`) dan server Reverb (`php artisan reverb:start`) sedang berjalan.
+
+## 📁 Struktur Proyek Singkat
+
+```
+app/
+├── Events/            → event broadcasting (update dokumen, typing, aktivitas user)
+├── Http/Controllers/  → DocumentController, SharedDocumentController, TypingController, dll
+├── Models/             → Document, DocumentVersion, User
+resources/views/
+├── documents/          → dashboard, editor, riwayat, halaman share
+├── auth/               → login, register, reset password, dll
+├── layouts/            → layout utama & layout guest
+database/migrations/    → struktur tabel documents, document_versions, document_user
+```
+
+## 🧪 Menjalankan Test
+
+```bash
+composer test
+```
+
+atau
+
+```bash
+php artisan test
+```
+
+## 📄 Lisensi
+
+Proyek ini dibangun di atas framework [Laravel](https://laravel.com) yang dilisensikan di bawah [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+**Dibuat oleh:**
+Nama: Khairul Amri
+Kelas: A3
